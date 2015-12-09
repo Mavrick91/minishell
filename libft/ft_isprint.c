@@ -6,14 +6,15 @@
 /*   By: maducham <maducham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 11:28:17 by maducham          #+#    #+#             */
-/*   Updated: 2014/11/03 11:29:54 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/09 14:56:37 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int		ft_isprint(char *s)
 {
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	while (s[i])
 	{
 		if (s[i] > 32 && s[i] <= 126)

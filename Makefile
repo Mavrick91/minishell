@@ -6,7 +6,7 @@
 #    By: maducham <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/14 15:00:53 by maducham          #+#    #+#              #
-#    Updated: 2015/12/06 16:28:51 by maducham         ###   ########.fr        #
+#    Updated: 2015/12/09 18:48:02 by maducham         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ HEAD_CLIENT =	$(addprefix $(FLDR_CLIENT), $(NAME_CLIENT).h)
 SRC_CLIENT =	ft_minishell.c \
 				signaux.c \
 				environement.c \
+				utils.c \
+				get_path.c \
 
 SRC_DIR_CLIENT =$(addprefix $(FLDR_CLIENT), $(SRC_CLIENT))
 

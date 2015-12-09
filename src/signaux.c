@@ -6,7 +6,7 @@
 /*   By: maducham <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 16:11:41 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/08 16:12:06 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/09 16:51:35 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	prompt_a(int sig)
 
 void	gestion_signaux(void)
 {
-	signal(SIGINT, prompt_a);
+//	signal(SIGINT, prompt_a);
 	signal(SIGTERM, prompt);
 	signal(SIGHUP, prompt_a);
 	signal(SIGCONT, prompt);
@@ -41,7 +41,7 @@ void	gestion_signaux(void)
 	signal(SIGILL, prompt);
 	signal(SIGTRAP, prompt);
 	signal(SIGABRT, prompt);
-// 	signal(SIGEMT, prompt);
+	signal(SIGEMT, prompt);
 	signal(SIGFPE, prompt);
 	signal(SIGKILL, prompt);
 	signal(SIGBUS, prompt);

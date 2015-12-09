@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_sort.c                                     :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maducham <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/11 17:50:50 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/09 14:57:56 by maducham         ###   ########.fr       */
+/*   Created: 2015/12/09 18:48:14 by maducham          #+#    #+#             */
+/*   Updated: 2015/12/09 19:06:23 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../ft_minishell.h"
 
-void		ft_list_sort(t_list **begin_list, int (*cmp)())
+char		**get_path()
 {
-	t_list	*list;
-	char	*tmp;
+	int			fd;
+	char		*line;
+	char		**tab;
+	int			i;
 
-	tmp = NULL;
-	list = *begin_list;
-	while (list->next)
+	i = 0;
+	if ((fd = open("/etc/paths", O_RDONLY)) == -1)
 	{
-		if (cmp(list->data, (list->next)->data) > 0)
-		{
-			tmp = list->data;
-			list->data = (list->next)->data;
-			list->next->data = tmp;
-			list = *begin_list;
-		}
-		list = list->next;
+		ft_putstr("Erreur lors de l'ouverture");
+		exit(1);
 	}
+	tab = (char **)malloc(sizeof(char *) * 6);
+	while (get_next_line(fd, &line))
+	{
+		tab[i] = (char*)malloc(sizeof(char) * ft_strlen(line) + 1);
+		tab[i] = line;
+		i++;
+	}
+	return (tab);
 }

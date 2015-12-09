@@ -6,7 +6,7 @@
 /*   By: maducham <maducham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 15:51:48 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/08 17:34:11 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/09 14:57:00 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char		**ft_inittmp(char **tmp, char const *s, char c)
 	z = 0;
 	while (s[i] != '\0' && s[i] != '\n')
 	{
-		if (s[i] != c && s[i] != '\t' )
+		if (s[i] != c && s[i] != '\t')
 		{
 			while (s[i] != c && s[i] != '\0' && s[i] != '\n' && s[i] != '\t')
 				tmp[u][z++] = s[i++];
