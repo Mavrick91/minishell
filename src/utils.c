@@ -66,7 +66,7 @@ void		check_line(char *buf, char **tab)
 				exit(0);
 			else
 			{
-				ft_putstr("exit: too many arguments");
+				ft_putstr("exit: too many arguments\n");
 				exit(1);
 			}
 		}
@@ -75,4 +75,29 @@ void		check_line(char *buf, char **tab)
 		else
 			ft_minishell(buf);
 	}
+}
+
+void		process_no_env(char **args)
+{
+	pid_t		parent;
+	int			status;
+	char		**directory_path;
+	int			i;
+	char		*binary;
+
+	i = 0;
+	binary = ft_strjoin("/", args[0]);
+	directory_path = get_path();
+	while (((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) != 0)
+			&& directory_path[i])
+		i++;
+	if ((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) == 0)
+	{
+		if ((parent = fork()) == 0)
+			execve(ft_strjoin(directory_path[i], binary), args, NULL);
+		else
+			wait(&status);
+	}
+	else
+		ft_putstr("Binaire not found\n");
 }

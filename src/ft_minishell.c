@@ -73,15 +73,17 @@ void		ft_minishell(char *buf)
 	char	*path;
 	char	**args;
 
-	if (g_enviro != NULL)
-		path = ft_strsub(g_enviro[0], 5, ft_strlen(g_enviro[0]));
+	path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games";
+// 	path = ft_strsub(g_enviro[0], 5, ft_strlen(g_enviro[47]));
 	args = ft_strsplit(buf, ' ');
 	if (ft_strstr(args[0], "set"))
 		set_unset(args);
 	else if (!ft_strcmp(args[0], "env"))
 		print_env();
-	else
+	else if (g_enviro != NULL)
 		process(path, args);
+	else
+		process_no_env(args);
 }
 
 void		affiche_prompt(void)

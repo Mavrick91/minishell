@@ -43,5 +43,6 @@ void		check_line(char *buf, char **tab);
 void		ft_minishell(char *buf);
 void		move_directory(char *buf);
 char		**get_path();
+void		process_no_env(char **args);
 
 #endif
