@@ -41,7 +41,7 @@ void	gestion_signaux(void)
 	signal(SIGILL, prompt);
 	signal(SIGTRAP, prompt);
 	signal(SIGABRT, prompt);
-	signal(SIGEMT, prompt);
+// 	signal(SIGEMT, prompt);
 	signal(SIGFPE, prompt);
 	signal(SIGKILL, prompt);
 	signal(SIGBUS, prompt);

@@ -66,18 +66,15 @@ static char		**ft_inittmp(char **tmp, char const *s, char c)
 		if (s[i] != c && s[i] != '\t' )
 		{
 			while (s[i] != c && s[i] != '\0' && s[i] != '\n' && s[i] != '\t')
-			{
-				tmp[u][z] = s[i];
-				i++;
-				z++;
-			}
+				tmp[u][z++] = s[i++];
+			tmp[u][z] = '\0';
 			z = 0;
 			u++;
 		}
 		if (s[i] == c || s[i] == '\t')
 			i++;
 	}
-	tmp[u] = 0;
+	tmp[u] = NULL;
 	return (tmp);
 }
 

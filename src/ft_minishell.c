@@ -1,5 +1,12 @@
 #include "../ft_minishell.h"
 
+#define CANCEL ft_putstr("\033[00m")
+#define RED ft_putstr("\033[31m")
+#define BLUE ft_putstr("\033[34m"); ft_putstr("Minishell >> "); CANCEL;
+#define CYAN ft_putstr("\033[36m")
+#define GREEN ft_putstr("\033[32m"); ft_putstr("Minishell >> "); CANCEL;
+#define YELLOW ft_putstr("\033[33m")
+
 void		move_directory(char *buf)
 {
 	char	**directory;
@@ -17,44 +24,34 @@ void		process(char *path, char *args[])
 	int		i;
 	char	*binary;
 
-	binary = ft_strjoin("/", args[0]);
 	i = 0;
+	binary = ft_strjoin("/", args[0]);
 	directory_path = ft_strsplit(path, ':');
-	printf("path = %s\n", path);
-	printf("directory_path[0] = %s\n", directory_path[0]);
-	printf("directory_path[1] = %s\n", directory_path[1]);
-	printf("directory_path[2] = %s\n", directory_path[2]);
-	printf("directory_path[3] = %s\n", directory_path[3]);
-	while ((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) != 0)
-	{
-		printf("binaire = %s\n",ft_strjoin(directory_path[i], binary));
-		if ((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) == 0)
-		{
-			printf("test\n");
-		/*
-		 * printf("str = %s\n", ft_strjoin(directory_path[1], binary));
-			if ((parent = fork()) == 0)
-				execve((ft_strjoin(directory_path[i], args[0])), args, enviro);
-			else
-				waitpid(parent, &status, 0);
-		*/
-		}
+	while (((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) != 0)
+	&& directory_path[i])
 		i++;
+	if ((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) == 0)
+	{
+		if ((parent = fork()) == 0)
+			execve(ft_strjoin(directory_path[i], binary), args, enviro);
+		else
+			waitpid(parent, &status, 0);
 	}
+	else
+		ft_putstr("Binaire not found\n");
 }
 
 void		ft_minishell(char *buf)
 {
 	char	*path;
-	char	*env_args[2];
 	char	**args;
 
 	path = ft_strsub(enviro[0], 5, ft_strlen(enviro[0]));
-	env_args[0] = path;
-	env_args[1] = NULL;
 	args = ft_strsplit(buf, ' ');
 	if (ft_strstr(args[0], "set"))
 		set_unset(args);
+	else if (!ft_strcmp(args[0], "env"))
+		print_env();
 	else
 		process(path, args);
 }
@@ -66,20 +63,20 @@ void		affiche_prompt(void)
 	int		ret;
 
 	buf = (char*)malloc(sizeof(char));
-	ft_putstr("Minishell >> ");
+	GREEN;
 	while ((ret = (get_next_line(1, &buf))))
 	{
 		if (ft_isprint(buf))
 		{
 			tab = ft_strsplit(buf, ' ');
-			if (ft_strcmp(buf, "exit") == 0)
+			if (ft_strcmp(buf, "exit\n") == 0)
 				exit(0);
 			if (tab[0][0] == 'c' && tab[0][1] == 'd')
 				move_directory(buf);
 			else
 				ft_minishell(buf);
 		}
-		ft_putstr("Minishell >> ");
+		GREEN;
 	}
 	if (ret == 0)
 		ft_putstr("exit\n");
