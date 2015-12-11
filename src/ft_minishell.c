@@ -6,18 +6,11 @@
 /*   By: maducham <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 14:57:32 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/09 19:30:11 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/11 17:38:42 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_minishell.h"
-
-#define CANCEL ft_putstr("\033[00m")
-#define RED ft_putstr("\033[31m")
-#define BLUE ft_putstr("\033[34m"); ft_putstr("Minishell >> "); CANCEL;
-#define CYAN ft_putstr("\033[36m")
-#define GREEN ft_putstr("\033[32m"); ft_putstr("Minishell >> "); CANCEL;
-#define YELLOW ft_putstr("\033[33m")
 
 void		move_directory(char *buf)
 {
@@ -50,7 +43,7 @@ void		process(char *path, char *args[])
 
 	i = 0;
 	binary = ft_strjoin("/", args[0]);
-	if (g_enviro == NULL)
+	if (g_enviro == NULL || (g_enviro[0][0] != 'P' && (g_enviro[0][0] != 'A')))
 		directory_path = get_path();
 	else
 		directory_path = ft_strsplit(path, ':');
@@ -68,25 +61,25 @@ void		process(char *path, char *args[])
 		ft_putstr("Binaire not found\n");
 }
 
-void		ft_minishell(char *buf)
+void		ft_minishell(char *buf, char **env)
 {
 	char	*path;
 	char	**args;
 
-	path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games";
-// 	path = ft_strsub(g_enviro[0], 5, ft_strlen(g_enviro[47]));
+	if (env[0] != NULL)
+		path = ft_strsub(g_enviro[0], 5, ft_strlen(g_enviro[0]));
 	args = ft_strsplit(buf, ' ');
 	if (ft_strstr(args[0], "set"))
-		set_unset(args);
-	else if (!ft_strcmp(args[0], "env"))
-		print_env();
+		set_unset(args, env);
+	else if (!ft_strcmp(args[0], "env") && args[1] == NULL)
+		print_env(env);
 	else if (g_enviro != NULL)
 		process(path, args);
 	else
 		process_no_env(args);
 }
 
-void		affiche_prompt(void)
+void		affiche_prompt(char **env)
 {
 	char	*buf;
 	char	**tab;
@@ -97,7 +90,7 @@ void		affiche_prompt(void)
 	GREEN;
 	while ((ret = (get_next_line(1, &buf))))
 	{
-		check_line(buf, tab);
+		check_line(buf, tab, env);
 		GREEN;
 	}
 	if (ret == 0)
@@ -111,10 +104,11 @@ int			main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	buf = NULL;
+	g_enviro = NULL;
 	g_way_absolute = getcwd(buf, 255);
 	gestion_signaux();
-	if (env != NULL)
+	if (env[0] != NULL)
 		g_enviro = env;
-	affiche_prompt();
+	affiche_prompt(env);
 	return (0);
 }

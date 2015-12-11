@@ -6,7 +6,7 @@
 /*   By: maducham <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 16:11:41 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/09 16:51:35 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/11 16:50:41 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,22 @@ void	prompt(int sig)
 {
 	(void)sig;
 	ft_putstr("\n");
-}
-
-void	prompt_z(int sig)
-{
-	(void)sig;
-	ft_putstr("\n");
-}
-
-void	prompt_a(int sig)
-{
-	(void)sig;
-	ft_putstr("\nMinishell >> ");
+	GREEN;
 }
 
 void	gestion_signaux(void)
 {
-//	signal(SIGINT, prompt_a);
+	/*
+	signal(SIGINT, prompt);
 	signal(SIGTERM, prompt);
-	signal(SIGHUP, prompt_a);
+	signal(SIGHUP, prompt);
 	signal(SIGCONT, prompt);
 	signal(SIGSEGV, prompt);
 	signal(SIGQUIT, prompt);
 	signal(SIGILL, prompt);
 	signal(SIGTRAP, prompt);
 	signal(SIGABRT, prompt);
-// 	signal(SIGEMT, prompt);
+	signal(SIGEMT, prompt);
 	signal(SIGFPE, prompt);
 	signal(SIGKILL, prompt);
 	signal(SIGBUS, prompt);
@@ -57,4 +47,5 @@ void	gestion_signaux(void)
 	signal(SIGPROF, prompt);
 	signal(SIGUSR1, prompt);
 	signal(SIGUSR2, prompt);
+	*/
 }

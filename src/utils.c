@@ -6,7 +6,7 @@
 /*   By: maducham <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/09 15:08:46 by maducham          #+#    #+#             */
-/*   Updated: 2015/12/09 18:37:24 by maducham         ###   ########.fr       */
+/*   Updated: 2015/12/11 18:16:12 by maducham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,23 @@ int			nb_elem(char **str)
 	return (i);
 }
 
-void		set_unset(char **args)
+void		set_unset(char **args, char **env)
 {
-	if (args[1] == NULL)
-		ft_putstr("too fiew argument 2\n");
-	else
+	if ((env[0] != NULL || g_enviro != NULL || !(ft_strcmp("setenv", args[0]))))
 	{
-		if (!(ft_strcmp("unsetenv", args[0])) && args[1] != NULL
-				&& args[2] == NULL)
-			unset_env(args);
-		else if (!(ft_strcmp("setenv", args[0])) && args[1] != NULL
-				&& args[2] != NULL && args[3] == NULL)
-			set_env(args);
+		if (args[1] == NULL)
+			ft_putstr("too fiew argument 2\n");
 		else
-			ft_putstr("too many argument 3 \n");
+		{
+			if (!(ft_strcmp("setenv", args[0])) && args[1] != NULL
+			&& args[2] != NULL && args[3] == NULL)
+				set_env(args);
+			else if (!(ft_strcmp("unsetenv", args[0])) && args[1] != NULL
+					&& args[2] == NULL)
+				unset_env(args);
+			else
+				ft_putstr("too many argument 3 \n");
+		}
 	}
 }
 
@@ -55,7 +58,7 @@ char		*get_home(void)
 	return (NULL);
 }
 
-void		check_line(char *buf, char **tab)
+void		check_line(char *buf, char **tab, char **env)
 {
 	if (ft_isprint(buf))
 	{
@@ -73,7 +76,7 @@ void		check_line(char *buf, char **tab)
 		if (tab[0][0] == 'c' && tab[0][1] == 'd')
 			move_directory(buf);
 		else
-			ft_minishell(buf);
+			ft_minishell(buf, env);
 	}
 }
 
