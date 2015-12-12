@@ -52,26 +52,36 @@ static int		ft_lenletter(char const *s, char c, int *z)
 	return (i);
 }
 
+void			function(char *c)
+{
+	if (*c == '@')
+		*c = ' ';
+	else if (*c == ' ')
+		*c = '@';
+
+}
+
 static char		**ft_inittmp(char **tmp, char const *s, char c)
 {
 	int		i;
-	int		u;
 	int		z;
+	int		u;
 
 	i = 0;
-	u = 0;
 	z = 0;
+	u = 0;
 	while (s[i] != '\0' && s[i] != '\n')
 	{
 		if (s[i] != c && s[i] != '\t' && s[i] != '\"')
 		{
 			while (s[i] != c && s[i] != '\0' && s[i] != '\n'
-					&& s[i] != '\t' && s[i] != '\"')
+			&& s[i] != '\t' && s[i] != '\"')
 				tmp[u][z++] = s[i++];
-			tmp[u][z] = '\0';
+			tmp[u++][z] = '\0';
 			z = 0;
-			u++;
 		}
+		if (s[i] == '\"')
+			function(&c);
 		if (s[i] == c || s[i] == '\t' || s[i] == '\"')
 			i++;
 	}

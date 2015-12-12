@@ -50,5 +50,6 @@ void		ft_minishell(char *buf, char **env);
 void		move_directory(char *buf);
 char		**get_path();
 void		process_no_env(char **args);
+char		**parsing(char *buf);
 
 #endif

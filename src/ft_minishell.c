@@ -43,7 +43,7 @@ void		process(char *path, char *args[])
 
 	i = 0;
 	binary = ft_strjoin("/", args[0]);
-	if (g_enviro == NULL || (g_enviro[0][0] != 'P' && (g_enviro[0][0] != 'A')))
+	if (g_enviro == NULL || (g_enviro[47][0] != 'P' && (g_enviro[47][0] != 'A')))
 		directory_path = get_path();
 	else
 		directory_path = ft_strsplit(path, ':');
@@ -53,7 +53,7 @@ void		process(char *path, char *args[])
 	if ((access(ft_strjoin(directory_path[i], binary), F_OK | X_OK)) == 0)
 	{
 		if ((parent = fork()) == 0)
-			execve(ft_strjoin(directory_path[i], binary), args, g_enviro);
+			exit(execve(ft_strjoin(directory_path[i], binary), args, g_enviro));
 		else
 			wait(&status);
 	}
@@ -67,7 +67,7 @@ void		ft_minishell(char *buf, char **env)
 	char	**args;
 
 	if (env[0] != NULL)
-		path = ft_strsub(g_enviro[0], 5, ft_strlen(g_enviro[0]));
+		path = ft_strsub(g_enviro[47], 5, ft_strlen(g_enviro[47]));
 	args = ft_strsplit(buf, ' ');
 	if (ft_strstr(args[0], "set"))
 		set_unset(args, env);
